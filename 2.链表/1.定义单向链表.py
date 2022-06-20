@@ -1,0 +1,140 @@
+# define the single link list
+'''需要封装的操作 (全部都是对于链表类的对象方法)
+is_emppty()链表是否为空
+length()链表长度
+travel()遍历整个链表
+add(item)链表头部添加元素
+append(item)链表尾部添加元素
+insert(pos,item)指定位置添加元素
+remove(item)删除节点
+search(item)查找节点是否存在'''
+
+class Node(object):
+    '''node类'''
+    def __init__(self,elem):
+        self.elem = elem
+        self.next = None # 对有一个节点的初始状态，我们不知道指向谁，所以就指向空
+
+class SingleLinkeList(object):
+    '''单链表'''
+    def __init__(self,node = None):
+        '''链表必须要有一个头部参数来指向之后的节点，默认头部参数为None'''
+        self.__head = node #私有属性
+
+    def is_empty(self):
+        '''链表是否为空'''
+        return self.__head == None
+
+    def length(self):
+        '''返回链表长度'''
+       # cur游标，用来移动遍历节点
+        # count记录数量
+        count = 0
+        cur = self.__head
+        while cur != None:
+            count += 1
+            cur = cur.next
+        return count
+
+    def travel(self):
+        '''遍历整个链表'''
+        cur = self.__head
+        while cur != None:
+            print(cur.elem,end=' ')
+            cur = cur.next
+        print('')
+
+    def add(self,item):
+        '''链表头部添加元素，头插法'''
+        node = Node(item)
+        node.next = self.__head
+        self.__head = node
+
+    def append(self,item):
+        '''链表尾部添加元素,尾插法'''
+        node = Node(item)
+        if self.is_empty():
+            self.__head = node
+        else:
+            cur = self.__head
+            while cur.next != None:
+                cur = cur.next
+            cur.next = node
+
+    def insert(self,pos,item):
+        '''链表指定位置添加元素'''
+        node = Node(item)
+
+        if pos <= 0:
+            self.add(item)
+        elif pos > self.length()-1:
+            self.append(item)
+        else:
+            pre = self.__head # 指针从头指向position前面的node,首先指到第一个node
+            for count in range(pos-1):
+                pre = pre.next # 循环结束后pre指向pos前一个
+            node.next = pre.next
+            pre.next = node
+
+
+
+    def remove(self,item):
+        '''删除指定节点'''
+    #     double pointer
+        cur = self.__head
+        pre = None
+        while cur != None:
+            if cur.elem == item:
+                # 先判断此节点是否是头节点
+                # 对于头节点
+                if cur == self.__head:
+                    self.__head = cur.next
+                else:
+                    pre.next = cur.next
+                break
+            else:
+                pre = cur
+                cur = cur.next
+
+
+    def search(self,item):
+        '''查找节点是否存在'''
+        cur = self.__head
+        while cur != None:
+            if cur.elem == item:
+                return True
+            else:
+                cur = cur.next
+        return False
+
+# l = SingleLinkeList()
+# l.append(1)
+# l.append(2)
+# l.append(2)
+# l.append(2)
+# l.append(2)
+# l.add(8)
+# l.insert(2,6)
+# l.travel()
+# print(l.search(6))
+# print(l.search(5))
+# l.remove(8)
+# l.travel()
+# l.remove(2)
+# l.travel()
+# l.remove(1)
+# l.travel()
+# l.remove(6)
+# l.travel()
+l = SingleLinkeList()
+l.insert(0,10)
+l.insert(0,20)
+l.insert(2,30)
+l.travel()
+'''
+单向链表的总结，其优势在于，单项链表存储的数据地址可以不是连续的
+当一个计算机没有足够多连续地址的存储空间时，可以用链表
+但是代价就是，链表不仅存储了数据elem，同时还要存储next，这样就会造成空间的浪费
+在头插法中，链表时间复杂度为O(1),列表为O(n)。在其他中间插入，尾插等等他们的时间复杂度都是O(n)
+    但是代表的意义不一样。链表的时间花在定位上，列表的时间花在移动元素上
+'''
