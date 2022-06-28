@@ -24,6 +24,12 @@ leetcode 322
 输入：coins = [1], amount = 0
 输出：0
 '''
+# 这道题可以看出，求的不是最大值，是最小值。但是同样都是最值，且都有amount作为限制条件
+# 我们类比到背包问题就是每个硬币的value是1，重量就是coins，要装满背包需要的最小硬币个数
+# 假如是求最大硬币个数，那就是很传统的一个背包问题，求最大价值，dp[j] = max(dp[j], dp[j-weight[i]] + value[i]]
+# 那么要求最小价值，就是把max变成min即可。
+# 初始化条件需要变一下，求最大值时初始成0没问题，但是求最小值，需要将dp数组初始化成amount + 1，理论最大值就是全部装1元的硬币，能装下最多，
+# 那么数量就是amount，初始化为amount+1就可以在之后运算当中被函数min覆盖
 class Solution:
     def coinChange(self, coins: List[int], amount: int) -> int:
         dp =[0] + [amount+1]*(amount) # 最坏的情况就是全部拿1来凑，这里初始化一个最大值，在后面比较min时可以被覆盖掉
