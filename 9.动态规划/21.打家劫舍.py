@@ -1,7 +1,7 @@
 '''
 
 涉及到的题目
-leetcode 198、213
+leetcode 198、213、337
 
 '''
 '''
@@ -129,3 +129,47 @@ class Solution:
                  dp_1[i] = max(dp_1[i-1], nums[i]+dp_1[i-2])
                  dp_2[i] = max(dp_2[i-1], nums[i]+dp_2[i-2])
         return max(dp_1[-1], dp_2[-1])
+
+'''
+leetcode 337
+337. 打家劫舍 III
+小偷又发现了一个新的可行窃的地区。这个地区只有一个入口，我们称之为 root 。
+除了 root 之外，每栋房子有且只有一个“父“房子与之相连。
+一番侦察之后，聪明的小偷意识到“这个地方的所有房屋的排列类似于一棵二叉树”。
+如果 两个直接相连的房子在同一天晚上被打劫 ，房屋将自动报警。
+给定二叉树的 root 。返回 在不触动警报的情况下 ，小偷能够盗取的最高金额 。
+
+示例 1:
+输入: root = [3,2,3,null,3,null,1]
+输出: 7
+解释: 小偷一晚能够盗取的最高金额 3 + 3 + 1 = 7
+
+示例 2:
+输入: root = [3,4,5,1,3,null,1]
+输出: 9
+解释: 小偷一晚能够盗取的最高金额 4 + 5 = 9
+'''
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    '''本题的思路就是遍历树的每一个节点的时候返回值为一个元组，元组0表示偷当前节点可以获得的最大价值，元组1表示不偷当前节点可以获得的最大价值。那么树的遍历方式一定是后序遍历，因为树的最底层一定是0，因为从最底层开始偷，树的最上层一定是偷钱最多的地方，因为从下往上偷，价值不断累加。所以必须要用返回值来做下一步的计算，故要后序遍历
+    假设遇到空节点，说明这一分支遍历到头，返回(0,0)，说明偷或者不偷，都只能得到0元
+    再开始左-右-中遍历。因为之后遍历需要用到左右分枝返回的结果，所以我们用left和right来接收左右分枝获利最大值
+    这个时候处理中节点的单循环逻辑，先计算偷取父节点所获的最大价值，value0 = root.val + left[1] + right[1]， left1和right1代表着左右不偷获得的最大价值，再加上父节点的价值
+    再计算不偷父节点的最大价值，这个时候就没有root.val了，但是我们左右子节点就可以选择偷或者不偷，取决于哪个价值最大
+    最后返回当前节点偷与不偷的价值元组'''
+    def rob(self, root: TreeNode) -> int:
+        res = self.c(root)
+        return max(res)
+    def c(self, root):
+        if not root: return (0,0) # 0 偷root， 1不偷root
+        left = self.c(root.left)
+        right = self.c(root.right)
+        value0 = root.val + left[1] + right[1] # 偷root节点，再加上不偷左右子节点的钱
+        value1 = max(left[0], left[1]) + max(right[0], right[1])
+        return (value0, value1)
