@@ -88,3 +88,29 @@ class Solution:
                         result += 1
                         dp[i][j] = True
         return result
+
+class Solution:
+    def countSubstrings(self, s: str) -> int:
+        '''中心扩展法，将字符串的每一个部分都当做中心，然后向两边延伸，寻找相同的部分
+        但凡有一个地方不相同就退出循环
+        例如baab，第一次中心点选b，延伸只有b本身是回文子串，返回1
+                  第二次中心点选a，延伸只有a本身是回文子串，返回1
+                  第三次中心点选a，延伸只有a本身是回文子串，返回1
+                  第四次中心点选b，延伸只有b本身是回文子串，返回1
+                  第五次中心点选ba，延伸后没有回文子串，返回0
+                  第六次中心点选aa，延伸后不仅有aa，还有baab，返回2
+                  第七次中心点选ab，延伸后没有回文子串，返回0
+        最终返回6'''
+        def extend(s,left,right):
+            count = 0
+            while left >= 0 and right <= len(s)-1 and s[left] == s[right]:
+                left -= 1
+                right += 1
+                count += 1
+            return count
+
+        res = 0
+        for i in range(len(s)):
+            res += extend(s,i,i)
+            res += extend(s,i,i+1)
+        return res
