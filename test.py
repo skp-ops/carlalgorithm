@@ -4,4 +4,7 @@
 LeetCode 20
 
 '''
-print(8%8)
+a = [1,2]
+for _ in range(3):
+    a[1] += 1
+print(a)

@@ -161,7 +161,6 @@ print(*a) # [1, 2, 5] [6, 7, 8] [3, 9, 4]
 ```
 
 10.遇0结束情况
-![img.png](zero.png)
 ```python
 '''
 注意，这里无需循环
@@ -172,7 +171,8 @@ a, b = map(int, input().split())
         break
     print(a + b)
 ```
-![img_1.png](zero_2.png)
+![img.png](zero.png)
+
 ```python
 '''
 注意，这里无需循环
@@ -185,3 +185,4 @@ if n == 0:
     break
 print(sum(nums))
 ```
+![img_1.png](zero_2.png)
