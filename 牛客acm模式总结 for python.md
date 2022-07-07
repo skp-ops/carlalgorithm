@@ -73,7 +73,7 @@ print(a) # ['3', 'abc', 'bca', 'cab', 'abc', '1']
 输入：1 2 3 4 5 6
 输出：[1,2,3,4,5,6]
 '''
-nums = list(map(int(),input().split()))
+nums = list(map(int,input().split()))
 print(nums)
 ```
 
@@ -83,7 +83,7 @@ print(nums)
 输入：3 5
 需要获取3和5以便后续运算
 '''
-x, y = map(int(),input().split())
+x, y = map(int,input().split())
 # x = 3     y = 5
 ```
 
@@ -125,7 +125,7 @@ print (str.strip().split())
 n = int(input())
 arr = []
 for _ in range(n):
-    arr.append(list(map(int(), input().split())))
+    arr.append(list(map(int, input().split())))
 
 ```
 
@@ -171,7 +171,7 @@ a, b = map(int, input().split())
         break
     print(a + b)
 ```
-![img.png](zero.png)
+![img.png](figure storage/zero.png)
 
 ```python
 '''
@@ -179,10 +179,10 @@ a, b = map(int, input().split())
 一行代表一个case
 '''
 # 先用一个数组接收
-arr = list(int(),input().strip().split())
+arr = list(map(int,input().strip().split()))
 n, nums = arr[0], arr[1:]
 if n == 0:
     break
 print(sum(nums))
 ```
-![img_1.png](zero_2.png)
+![img_1.png](figure storage/zero_2.png)
