@@ -7,7 +7,8 @@ LeetCode 704、35、34、69、367
 
 '''
 leetcode 704
-给定一个 n 个元素有序的（升序）整型数组 nums 和一个目标值 target  ，写一个函数搜索 nums 中的 target，如果目标值存在返回下标，否则返回 -1。
+给定一个 n 个元素有序的（升序）整型数组 nums 和一个目标值 target  ，
+写一个函数搜索 nums 中的 target，如果目标值存在返回下标，否则返回 -1。
 https://leetcode-cn.com/problems/binary-search/
 示例1：
 输入: nums = [-1,0,3,5,9,12], target = 9
@@ -36,6 +37,10 @@ def bisearch1 ( nums: list[int], target: int) -> int:
     :param nums:给定的数组
     :param target:目标值
     :return:目标值下标
+
+    一般是在while循环下面第一步开始计算mid值
+    一般 mid = left + (right-left)//2 (为了防止left+right数据过大)
+    也可以用位运算表示 mid = (left+right) >> 1
     '''
 
     left, right = 0, len(nums) - 1  # 这里减1的原因是右边闭区间，数组里元素的个数和其下标始终相差1（从0开始计数）
@@ -78,7 +83,8 @@ print (bisearch2(nums= [3,5,6,78,567,1112,10898],target= 100))
 
 '''
 leetcode 35 
-给定一个排序数组和一个目标值，在数组中找到目标值，并返回其索引。如果目标值不存在于数组中，返回它将会被按顺序插入的位置。请必须使用时间复杂度为O(logn)的算法
+给定一个排序数组和一个目标值，在数组中找到目标值，并返回其索引。如果目标值不存在于数组中，返回它将会被按顺序插入的位置。
+请必须使用时间复杂度为O(logn)的算法
 https://leetcode-cn.com/problems/search-insert-position/
 示例1：
 输入: nums = [1,3,5,6], target = 5
@@ -103,10 +109,8 @@ def searchInsert(nums: list [int] , target: int) -> int:
             right = middle - 1
         else:
             return middle
-    nums.append(target)
-    nums.sort()
-    return nums.index(target)
-# while 循环结尾return时可以直接return 'right + 1', 因为当区间最后缩小到最小还是没找到target时，right+1就是它应该插入的位置
+    # while 循环结尾return时可以直接return 'right + 1', 因为当区间最后缩小到最小还是没找到target时，right+1就是它应该插入的位置
+    return right + 1
 
 '''
 leetcode 34
@@ -125,21 +129,13 @@ leetcode 34
 
 https://leetcode-cn.com/problems/find-first-and-last-position-of-element-in-sorted-array
 '''
-
-
-def searchRange1(nums: list[int], target: int) -> list[int]:
-    left, right = 0, len(nums) - 1
-    while left <= right:
-        middle = (left + right) // 2
-        if nums[middle] < target:
-            left = middle + 1
-        elif nums[middle] > target:
-            right = middle - 1
+class Solution:
+    def searchRange(self, nums: List[int], target: int) -> List[int]:
+        if target not in nums: return [-1,-1]
         else:
-            c = nums.count(nums[middle])  # 计算出数组中一共有多少个target
-            a = nums.index(nums[middle])  # 用二分法找到target，假如存在target的话，求出第一个target的index
-            return [a, a + c - 1]
-    return [-1, -1]  # 如果target不存在的话就返回[-1,-1]
+            count = nums.count(target)
+            index = nums.index(target)
+        return [index, index + count-1]
 # 时间复杂度O(n)
 
 # 第二种解法，用二分法不断逼近target的左右边界，分别将左右边界求出来，然后区间自然而然就出来了，时间复杂度O(logn)
@@ -156,6 +152,7 @@ class Solution:
                 if nums[middle] > target:
                     right = middle - 1
                 else:
+                    '''这里的判断条件就发生了变化，只要mid值小于等于target，就向右扩大范围'''
                     left = middle + 1
                     rightborder = left
 
@@ -167,6 +164,7 @@ class Solution:
             while left <= right:  # 无限趋近target的左边界，直到right等于target左边界的前一位，此时确定了左边界的值
                 middle = left + (right - left) // 2
                 if nums[middle] >= target:
+                    '''同理，mid值等于target也一直向左扩大范围'''
                     right = middle - 1
                     leftborder = right
                 else:
@@ -250,7 +248,6 @@ class Solution:
 '''
 leetcode 367
 给定一个 正整数 num ，编写一个函数，如果 num 是一个完全平方数，则返回 true ，否则返回 false 。
-
 进阶：不要 使用任何内置的库函数，如 sqrt 。
 
 示例 1：

@@ -19,7 +19,8 @@ leetcode 27移除元素
 示例 2：
 输入：nums = [0,1,2,2,3,0,4,2], val = 2
 输出：5, nums = [0,1,4,0,3]
-解释：函数应该返回新的长度 5, 并且 nums 中的前五个元素为 0, 1, 3, 0, 4。注意这五个元素可为任意顺序。你不需要考虑数组中超出新长度后面的元素。
+解释：函数应该返回新的长度 5, 并且 nums 中的前五个元素为 0, 1, 3, 0, 4。
+注意这五个元素可为任意顺序。你不需要考虑数组中超出新长度后面的元素。
 
 https://leetcode-cn.com/problems/remove-element
 
@@ -46,8 +47,10 @@ class Solution:
 
 '''
 leetcode 26
-给你一个 升序排列 的数组 nums ，请你 原地 删除重复出现的元素，使每个元素 只出现一次 ，返回删除后数组的新长度。元素的 相对顺序 应该保持 一致 。
-由于在某些语言中不能改变数组的长度，所以必须将结果放在数组nums的第一部分。更规范地说，如果在删除重复项之后有 k 个元素，那么nums的前 k 个元素应该保存最终结果。
+给你一个 升序排列 的数组 nums ，请你 原地 删除重复出现的元素，使每个元素 只出现一次 ，
+返回删除后数组的新长度。元素的 相对顺序 应该保持 一致 。
+由于在某些语言中不能改变数组的长度，所以必须将结果放在数组nums的第一部分。
+更规范地说，如果在删除重复项之后有 k 个元素，那么nums的前 k 个元素应该保存最终结果。
 将最终结果插入nums 的前 k 个位置后返回 k 。
 不要使用额外的空间，你必须在 原地 修改输入数组 并在使用 O(1) 额外空间的条件下完成。
 
@@ -90,18 +93,18 @@ leetcode 283
 # 思路：快指针走在前面，如果判断不是0，则快慢同时向前走。快指针一但碰到0，慢指针停止。
 #       直到快指针指向下一个不为0的元素，调换快慢指针当前所指的元素，然后慢指针向右移动，重复操作，直到遍历结束
 class Solution:
-    def moveZeroes(self, nums: list[int]) -> None:
+    def moveZeroes(self, nums: List[int]) -> None:
         """
         Do not return anything, modify nums in-place instead.
         """
-        s, f = 0, 0
-        while f < len(nums):
-            if nums[f] != 0:
-                ll = nums[s]
-                nums[s] = nums[f]
-                nums[f] = ll
-                s += 1
-            f += 1
+        slow, fast = 0, 0
+        while fast < len(nums):
+            if nums[fast] == 0:
+                fast += 1
+            else:
+                nums[slow], nums[fast] = nums[fast], nums[slow]
+                slow += 1
+                fast += 1
 
 '''
 leetcode 977
