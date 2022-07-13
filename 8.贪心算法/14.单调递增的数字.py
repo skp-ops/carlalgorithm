@@ -21,3 +21,24 @@ leetcode 738
 输入: n = 332
 输出: 299
 '''
+'''
+局部最优：遇到strNum[i - 1] > strNum[i]的情况，让strNum[i - 1]--，然后strNum[i]给为9，可以保证这两位变成最大单调递增整数。
+全局最优：得到小于等于N的最大单调递增的整数。
+但这里局部最优推出全局最优，还需要其他条件，即遍历顺序，和标记从哪一位开始统一改成9。
+'''
+class Solution:
+    def monotoneIncreasingDigits(self, n: int) -> int:
+        if n < 10: return n
+        nums = list(str(n))
+        change_point = -1
+        for i in range(len(nums)-1):
+            if nums[i] > nums[i+1]:
+                change_point = nums.index(nums[i])
+                break
+        if change_point == -1:
+            return int(''.join(nums))
+        else:
+            nums[change_point] = str(int(nums[change_point])-1)
+            for j in range(change_point+1,len(nums)):
+                nums[j] = '9'
+            return int(''.join(nums))
