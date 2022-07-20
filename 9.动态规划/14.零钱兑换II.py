@@ -35,7 +35,7 @@ class Solution:
     '''完全背包，要算出填满背包有多少种情况
     dp[x]表示要凑齐x元，一共有多少种方法
     因为求的是组合问题，遍历的顺序不能变，先遍历硬币，用完一种硬币再用下一种
-    这样不会重复计算，如果需要求组合数，就将两个循环调换位置'''
+    这样不会重复计算，如果需要求排列数，就将两个循环调换位置'''
     def change(self, amount: int, coins: List[int]) -> int:
         dp = [1] + [0] * amount
         for i in range(len(coins)): # 先遍历物品

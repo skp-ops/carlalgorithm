@@ -4,5 +4,6 @@
 LeetCode 20
 
 '''
-a = 'A123'
-print(a[0:])
+a = [1,2,3,4]
+print(a[:3])
+

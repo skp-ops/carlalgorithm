@@ -47,7 +47,8 @@ class Solution:
         stack = deque()
         res = []
         for i in range(len(nums)):
-            while stack and nums[stack[-1]] < nums[i]: # 让stack里坐标位置呈从大到小排序，即nums[stack[0]]>nums[stack[1]]>...>nums[stack[i]]
+            while stack and nums[stack[-1]] < nums[i]:
+                # 让stack里坐标位置呈从大到小排序，即nums[stack[0]]>nums[stack[1]]>...>nums[stack[i]]
                 stack.pop() # 同时剔除掉小于nums[i]的所有值
             stack.append(i) # 让stack的第一个位置，始终是滑动窗口中最大值的坐标
             if stack[0] == i - k: # 最大值将离开滑动窗口时，popleft
