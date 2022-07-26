@@ -1,0 +1,36 @@
+'''
+
+涉及到的题目
+leetcode 692
+
+'''
+'''
+leetcode 692
+692. 前K个高频单词
+给定一个单词列表 words 和一个整数 k ，返回前 k 个出现次数最多的单词。
+返回的答案应该按单词出现频率由高到低排序。如果不同的单词有相同出现频率， 按字典顺序 排序。
+
+示例 1：
+输入: words = ["i", "love", "leetcode", "i", "love", "coding"], k = 2
+输出: ["i", "love"]
+解析: "i" 和 "love" 为出现次数最多的两个单词，均为2次。
+    注意，按字母顺序 "i" 在 "love" 之前。
+    
+示例 2：
+输入: ["the", "day", "is", "sunny", "the", "the", "the", "sunny", "is", "is"], k = 4
+输出: ["the", "is", "sunny", "day"]
+解析: "the", "is", "sunny" 和 "day" 是出现次数最多的四个单词，
+    出现次数依次为 4, 3, 2 和 1 次。
+'''
+class Solution:
+    def topKFrequent(self, words: List[str], k: int) -> List[str]:
+        hash_dict = {}
+        for word in words:
+            hash_dict[word] = hash_dict.setdefault(word, 0) + 1
+        res = sorted(hash_dict, key = lambda x:(-hash_dict[x], x))
+        return res[:k]
+
+# 创建hash_dict的过程可以直接用collections.Counter(words)来实现
+# 将hash_dict进行sorted排序后返回的是key的列表
+# 排序规则为，将哈希表的值进行倒序排列，-hash_dict[x]。 如果碰到相等的值，那么按照键的字母顺序排列 x
+# 最后返回后k个最高频的元素即可
