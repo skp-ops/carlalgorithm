@@ -171,7 +171,7 @@ a, b = map(int, input().split())
         break
     print(a + b)
 ```
-![](figure storage/zero.png)
+![img](zero.png)
 
 ```python
 '''
@@ -185,4 +185,4 @@ if n == 0:
     break
 print(sum(nums))
 ```
-![](figure storage/zero_2.png)
+![img](zero_2.png)
